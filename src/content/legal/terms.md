@@ -1,27 +1,22 @@
 ---
 title: "Terms of Use"
-date: "03/07/2024"
+date: "08/18/2024"
 ---
 
-Please read these Terms of Use ("Terms", "Terms of Use") carefully before using the [Your Website URL] website (the "Service") operated by [Your Company Name] ("us", "we", or "our").
+Please read these Terms of Use carefully before using the portfolio website operated by c0balt60.
 
 #### Agreement to Terms
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
+By accessing or using the website, you agree to comply with and be bound by these Terms of Use. If you do not agree with these Terms, please do not use the Website.
 
 #### Intellectual Property Rights
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
-
-#### User Representations
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
+Content Ownership: All content on the Website, including but not limited to text, graphics, images, and videos, is the property of c0balt60's portfolio and is protected by copyright, trademark, and other intellectual property laws.<br>
+Use of Content: You may not reproduce, distribute, modify, or create derivative works from any content on the Website without our prior written permission.
 
 #### Links to Other Websites
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
+Our Site contains links to third-party websites or services that are not owned or controlled by c0balt60. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites. By using our Site, you acknowledge and agree that c0balt60's portfolio is not responsible or liable, directly or indirectly, for any damage or loss caused by or in connection with the use of any third-party content, goods, or services available through any such websites.
 
 #### Termination
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
-
-#### Governing Law
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
+We reserve the right to terminate or suspend your access to the Site at any time, without notice, for any reason, including but not limited to your breach of these Terms of Use. Upon termination, your right to use the Site will immediately cease.
 
 #### Changes to These Terms of Use
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet massa ut neque consequat congue. Sed id ipsum vitae sem imperdiet suscipit. Nulla facilisi. Morbi quis nibh at nunc pulvinar rhoncus. Proin porttitor dapibus dolor, id fermentum urna eleifend et. In feugiat pretium erat nec vestibulum.
+We reserve the right to modify or replace these Terms of Use at any time. We will notify you of any changes by posting the new terms on the Site. Your continued use of the Site after any such changes constitutes your acceptance of the new Terms of Use.

@@ -1,0 +1,38 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import ArticleTopLayout from "@layouts/ArticleTopLayout.astro"
+import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
+import StoreBottomLayout from "@layouts/StoreBottomLayout.astro"
+
+// Create the static store pages
+export async function getStaticPaths() {
+	const stores = await getCollection("store")
+	return stores.map((store) => ({
+		params: { slug: store.slug },
+		props: store,
+	}))
+}
+
+// Get the requested item
+type Props = CollectionEntry<"store">
+const item = Astro.props
+const { title, summary } = item.data
+---
+
+<PageLayout title={title} description={summary}>
+  <TopLayout>
+    <div class="animate">
+      <ArticleTopLayout entry={item} />
+    </div>
+  </TopLayout>
+  <BottomLayout>
+    <!--  NOTE ::: Remove the BottomLayout as you won't be able to switch 
+                      through different store items -->
+    <div class="animate">
+      <StoreBottomLayout entry={item} />
+    </div>
+  </BottomLayout>
+</PageLayout>

@@ -148,3 +148,36 @@ article img {
 #meteors .shower.ul {
   @apply rotate-315;
 }
+
+
+/**
+  * Gradients
+  */
+
+.bg-gradient-radial {
+  background-image: radial-gradient(rgb(175, 114, 0), rgb(24, 0, 63),rgb(0, 0, 0));
+}
+
+.bg-gradient-w {
+  background-image: radial-gradient(rgba(243, 226, 78, 0.2), rgba(0, 56, 141, 0.5));
+}
+
+.bg-planet {
+  @apply bg-gradient-to-b from-blue-400 dark:from-indigo-950 to-15% dark:to-black;
+}
+
+.astro:hover {
+  @apply bg-purple-500 dark:bg-purple-900;
+}
+
+.javascript:hover {
+  @apply bg-yellow-500 dark:bg-yellow-900;
+}
+
+.typescript:hover {
+  @apply bg-blue-300 dark:bg-blue-900;
+}
+
+.tailwind:hover {
+  @apply bg-indigo-300 dark:bg-indigo-900;
+}

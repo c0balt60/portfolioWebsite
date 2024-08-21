@@ -34,6 +34,18 @@ const projects = defineCollection({
   }),
 })
 
+const store = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    tags: z.array(z.string()),
+    draft: z.boolean().optional(),
+    price: z.string().optional(),
+  }),
+})
+
 const legal = defineCollection({
   type: "content",
   schema: z.object({
@@ -42,4 +54,4 @@ const legal = defineCollection({
   }),
 })
 
-export const collections = { work, blog, projects, legal }
+export const collections = { work, blog, projects, store, legal }

@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "site": "cobalt60",
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-east1"
+    }
+  }
+}

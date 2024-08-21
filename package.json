@@ -1,5 +1,5 @@
 {
-  "name": "astro-sphere",
+  "name": "c0balt60",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
@@ -23,6 +23,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "astro": "^4.4.13",
     "clsx": "^2.1.0",
+    "firebase": "^10.12.5",
     "fuse.js": "^7.0.0",
     "sharp": "^0.33.2",
     "solid-js": "^1.8.15",

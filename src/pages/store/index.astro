@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import Store from "@components/Store"
+import { STORE } from "@consts"
+
+const stores = (await getCollection("store"))
+  .filter(store => !store.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const tags = [...new Set(stores.flatMap(store => store.data.tags))]
+  .sort((a, b) => a.localeCompare(b))
+---
+
+<PageLayout title={STORE.TITLE} description={STORE.DESCRIPTION}>
+    <TopLayout>
+      <div class="animate page-heading">
+        {STORE.TITLE}
+        <br><br>
+        Notice :: The store is not operational on this webpage, email me or send me a request on discord
+        with the desired service.
+      </div>
+    </TopLayout>
+    <BottomLayout>
+      <div class="animate">
+        <Store client:load tags={tags} data={stores} />
+      </div>
+    </BottomLayout>
+</PageLayout>

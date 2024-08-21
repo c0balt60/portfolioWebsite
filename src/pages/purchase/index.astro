@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import { PURCHASE } from "@consts"
+
+---
+
+<PageLayout title={PURCHASE.TITLE} description={PURCHASE}.DESCRIPTION}>
+  <TopLayout>
+    <div class="animate page-heading">
+      {PURCHASE.TITLE}
+    </div>
+  </TopLayout>
+  <BottomLayout>
+    <div class="animate">
+        <p>Unfortunately we currently do not have a website store. Email me or send me a request on discord!</p>
+    </div>
+  </BottomLayout>
+</PageLayout>
