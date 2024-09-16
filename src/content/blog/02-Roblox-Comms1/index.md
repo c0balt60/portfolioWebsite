@@ -2,7 +2,7 @@
 title: "Roblox Theory: Simple Communication Module"
 summary: "Simplifying client-server communication with a module."
 date: "Aug 16 2024"
-draft: false
+draft: true
 tags:
 - Tutorial
 - Roblox

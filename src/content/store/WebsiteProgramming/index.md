@@ -5,9 +5,12 @@ date: "April 24 2024"
 draft: false
 tags:
 - Website
+price: "100R$"
+link: "/store/websiteprogramming"
 ---
 
-I can create a wide range of websites for you!
-Here are my services:
+----
 
+## Services Closed
 
+Unfortunately, my website services are currently closed 😞

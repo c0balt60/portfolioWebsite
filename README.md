@@ -1,89 +1,52 @@
-![Astro Sphere Lighthouse Score](_astrosphere.jpg)
+---
+---
 
-Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
+----
+## Roblox Developer Portfolio
+Welcome to my official Roblox developer portfolio! This repository contains the source code and files for my personal website, where I showcase the professional Roblox development services I offer. Whether you're interested in game scripting, systems development, or custom mechanics, you'll find all the details about my expertise here.
 
-It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
+----
+### Website Overview
+The portfolio website is designed to provide an easy-to-navigate platform where potential clients can learn about my services and get in touch for collaborations. The site is built using [technology stack, e.g., HTML, CSS, JavaScript, etc.] and highlights the following sections:
 
-## 🚀 Deploy your own
+**Home:** A brief introduction to my Roblox programming services.
+**Services:** Detailed breakdown of the various systems I can develop for Roblox games, including datastores, weapon systems, combat mechanics, and more.
+**About Me:** A brief overview of my experience and background in Roblox development.
+**Contact:** A simple form where clients can reach out to discuss potential projects or collaborations.
+What I Offer
+As a Roblox developer, I specialize in creating complex game mechanics and systems. Some of the key services I provide include:
 
-[![Deploy with Vercel](_deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere)  [![Deploy with Netlify](_deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere)
+- Datastores
+- Weapon Systems
+- Combat Systems
+- Tycoons
+- Placement Systems
+- Tower Defense Games
+- Simulators
+- Shop Systems
+- Pet Systems
+- Inventory Systems
+- User Interface Programming
+- Character Manipulation
+or more details on each service, visit the Services page on the live site.
 
-## 📋 Features
+----
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-- ✅ Searchable content (posts and projects)
+### Technologies Used
+- HTML5
+- CSS3
+- JavaScript
+- TypeScript
+- TailWind
+- SolidJs
 
-## 💯 Lighthouse score
-![Astro Sphere Lighthouse Score](_lighthouse.png)
+Contributing
+If you’re interested in contributing to this project, feel free to fork the repository, make changes, and submit a pull request. All contributions are welcome!
 
-## 🕊️ Lightweight
-All pages under 100kb (including fonts)
+----
 
-## ⚡︎ Fast
-Rendered in ~40ms on localhost
+License
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-## 📄 Configuration
-
-The blog posts on the demo serve as the documentation and configuration.
-
-## 💻 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run dev:network`     | Starts dev server on local network               |
-| `npm run sync`            | Generates TypeScript types for all Astro modules.|
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run preview:network` | Starts preview server on local network           |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run lint`            | Run ESLint                                       |
-| `npm run lint:fix`        | Auto-fix ESLint issues                           |
-
-## 🗺️ Roadmap
-
-A few features I plan to implement
-- ⬜ Code Blocks - copy to clipboard
-- ⬜ Article Pages - Table of Contents
-- ⬜ Article Pages - Share on social media
-
-## ✨ Acknowledgement
-
-Theme inspired by [Paco Coursey](https://paco.me/), [Lee Robinson](https://leerob.io/) and [Hayden Bleasel](https://www.haydenbleasel.com/)
-
-
-## 🏛️ License
-
-MIT
-
-
-# 1.0.1 Update
-
-Added ability to run dev and preview on local network.
-added npm run dev:network
-added npm run preview:network
-
-Added slightly more particle density in both light and dark mode.
-
-Added subtle dark mode star and meteor animations.
-
-Removed eslint config
-
+Contact
+If you'd like to discuss a project or have any questions, feel free to contact me through the Contact page on my website or via email at youremail@example.com.

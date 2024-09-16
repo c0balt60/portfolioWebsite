@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 // Get the requested item
 type Props = CollectionEntry<"store">
 const item = Astro.props
-const { title, summary } = item.data
+const { title, summary, link } = item.data
 ---
 
 <PageLayout title={title} description={summary}>
@@ -32,7 +32,7 @@ const { title, summary } = item.data
     <!--  NOTE ::: Remove the BottomLayout as you won't be able to switch 
                       through different store items -->
     <div class="animate">
-      <StoreBottomLayout entry={item} />
+      <StoreBottomLayout entry={item} link={link} />
     </div>
   </BottomLayout>
 </PageLayout>

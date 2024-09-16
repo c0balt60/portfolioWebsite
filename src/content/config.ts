@@ -42,7 +42,7 @@ const store = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()),
     draft: z.boolean().optional(),
-    price: z.string().optional(),
+    link: z.string(),
   }),
 })
 
