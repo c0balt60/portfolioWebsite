@@ -17,5 +17,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# firebase files
+.firebase
+.firebaserc
+firebase.json
+
 # macOS-specific files
 .DS_Store
