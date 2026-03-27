@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://cobalt60.web.app/sitemap-index.xml
