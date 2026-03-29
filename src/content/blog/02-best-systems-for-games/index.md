@@ -2,7 +2,7 @@
 title: "Top 5 Systems For A Successful Roblox Game"
 summary: "I will be reviewing the top systems that I think makes up a successful Roblox game."
 date: "Sep 16 2024"
-draft: false
+draft: true
 tags:
 - Theory
 - Roblox
@@ -35,7 +35,7 @@ Hit detection: Accuracy is key. Players need reliable hitboxes to ensure fairnes
 Combos and special moves: Offering players advanced techniques to master increases the depth of the gameplay.
 Example: In a Roblox fighting game, smooth attack animations combined with accurate hit detection create an enjoyable combat experience that players want to master.
 
----- 
+----
 
 ## 3. Inventory Systems: Managing Items and Resources
 

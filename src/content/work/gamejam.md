@@ -1,5 +1,5 @@
 ---
-company: "Current Gamejam Winner"
+company: "CURRENT Gamejam Winner"
 role: "Senior Developer"
 dateStart: "1/1/2026"
 dateEnd: "1/4/2026"

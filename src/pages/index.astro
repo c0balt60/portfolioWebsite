@@ -23,27 +23,27 @@ const stores = (await getCollection("store"))
   .slice(0,3)
 
 const stack = [
-  { 
-    text: "Astro", 
-    icon: "astro", 
+  {
+    text: "Astro",
+    icon: "astro",
     href: "https://astro.build",
     color: "bg-purple-500",
   },
-  { 
-    text: "Javascript", 
-    icon: "javascript", 
+  {
+    text: "Javascript",
+    icon: "javascript",
     href: "https://www.javascript.com",
     color: "bg-yellow-500"
   },
-  { 
-    text: "Typescript", 
-    icon: "typescript", 
+  {
+    text: "Typescript",
+    icon: "typescript",
     href: "https://www.typescriptlang.org",
     color: "bg-blue-500"
   },
-  { 
-    text: "Tailwind", 
-    icon: "tailwind", 
+  {
+    text: "Tailwind",
+    icon: "tailwind",
     href: "https://tailwindcss.com",
     color: "bg-blue-600"
   },
@@ -75,7 +75,7 @@ const stack = [
   </div>
 
   <script is:inline src="/js/bg.js"></script>
-  
+
   <!-- HERO -->
   <section class="relative h-screen w-full">
     <div id="planetcont" class='animate absolute inset-0 top-1/4 overflow-hidden'>
@@ -89,13 +89,16 @@ const stack = [
       <div class='relative w-full h-full flex items-center justify-center'>
         <div class='p-5 text-center'>
           <p class='animated text-lg md:text-xl lg:text-2xl font-semibold opacity-75'>
-            Hello, I am ...
+            Hello, I am
           </p>
           <p class='animated text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-black dark:text-white'>
-            Cobalt
+            cobalt
           </p>
           <p class='animated text-sm md:text-base lg:text-lg opacity-75'>
             Currently designing games and websites.
+          </p>
+          <p class="animated text-sm md:text-base lg:text-lg opacity-85">
+            Persuing a degree on computer science / software engineering
           </p>
           <div id="ctaButtons" class='animated flex flex-wrap gap-4 justify-center mt-5'>
             <a href='/blog' class='py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend'>
@@ -117,7 +120,7 @@ const stack = [
       <section class="animate">
         <article>
           <p>I am a <b>game developer</b>, <b>website developer</b>, sometimes a <b>mentor</b>, and <b>student</b> </p>
-          <p>I have <b>4+</b> years of experience developing games on Roblox, and about 1 year of experience creating websites</p>
+          <p>I have <b>5+</b> years of experience developing games on Roblox, and about 2 year of experience creating websites</p>
           <p>Now</p>
           <p>I am working on creating fun and engaging games on Roblox, while also developing websites!</p>
 
@@ -155,7 +158,7 @@ const stack = [
           </p>
           <div class=`flex flex-wrap items-center gap-2 mt-5`>
             {stack.map(item => (
-              <StackCard 
+              <StackCard
                 text={item.text}
                 icon={item.icon}
                 href={item.href}

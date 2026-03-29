@@ -1,11 +1,6 @@
----
----
-
-----
 ## Roblox Developer Portfolio
 Welcome to my official Roblox developer portfolio! This repository contains the source code and files for my personal website, where I showcase the professional Roblox development services I offer. Whether you're interested in game scripting, systems development, or custom mechanics, you'll find all the details about my expertise here.
 
-----
 ### Website Overview
 The portfolio website is designed to provide an easy-to-navigate platform where potential clients can learn about my services and get in touch for collaborations. The site is built using [technology stack, e.g., HTML, CSS, JavaScript, etc.] and highlights the following sections:
 
@@ -29,8 +24,6 @@ As a Roblox developer, I specialize in creating complex game mechanics and syste
 - User Interface Programming
 - Character Manipulation
 or more details on each service, visit the Services page on the live site.
-
-----
 
 ### Technologies Used
 - HTML5
