@@ -9,7 +9,7 @@ const collection = await getCollection("work");
 
 collection.sort(
   (a, b) =>
-    new Date(b.data.dateEnd).getTime() - new Date(a.data.dateEnd).getTime(),
+    new Date(b.data.dateStart).getTime() - new Date(a.data.dateStart).getTime(),
 );
 
 const work = await Promise.all(
