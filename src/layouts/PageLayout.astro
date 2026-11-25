@@ -20,7 +20,7 @@ const pageTransition = { forwards: anim, backwards: anim }
   <body>
     <Header />
     <Drawer />
-    <main transition:animate={pageTransition} class="bg-gradient-to-b from-blue-300 dark:from-indigo-950 to-white dark:to-black">
+    <main transition:animate={pageTransition} class="bg-gradient-to-b from-sky-300 via-sky-100 via-40% to-indigo-50 dark:from-indigo-950 dark:via-black dark:to-black">
       <slot />
     </main>
     <Footer />

@@ -23,7 +23,7 @@
 html {
   overflow-y: scroll;
   color-scheme: light;
-  background-color: white;
+  background-color: theme(colors.sky.50);
   font-family: "Atkinson", sans-serif;
   scroll-behavior: smooth;
 }
@@ -36,8 +36,8 @@ html.dark {
 html,
 body {
   @apply h-full w-full antialiased;
-  @apply bg-white dark:bg-black;
-  @apply text-black/75 dark:text-white/75;
+  @apply bg-sky-50 dark:bg-black;
+  @apply text-slate-900/75 dark:text-white/75;
 }
 
 body {
@@ -45,7 +45,24 @@ body {
 }
 
 main {
-  @apply flex flex-col flex-1 bg-white dark:bg-black;
+  @apply relative isolate flex flex-col flex-1 bg-sky-50 dark:bg-black;
+}
+
+/** Sky grid: fixed behind page content, fading out toward the bottom and sides */
+main::before {
+  content: "";
+  @apply fixed inset-0 -z-10 pointer-events-none;
+  --grid-line: theme(colors.sky.900 / 9%);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent 75%);
+}
+
+html.dark main::before {
+  --grid-line: theme(colors.white / 6%);
 }
 
 header {
@@ -58,7 +75,7 @@ header:not(.scrolled) {
 }
 
 header.scrolled {
-  @apply bg-white/75 dark:bg-black/50;
+  @apply bg-sky-50/75 dark:bg-black/50;
   @apply border-black/10 dark:border-white/25;
   @apply backdrop-blur-sm saturate-200;
 }
@@ -74,8 +91,9 @@ header.scrolled {
 
 /** Glass card used across the site */
 .card {
-  @apply rounded-xl border border-black/10 dark:border-white/15;
-  @apply bg-white/60 dark:bg-white/[0.03] backdrop-blur-sm;
+  @apply rounded-xl border border-sky-900/10 dark:border-white/15;
+  @apply bg-gradient-to-br from-white/70 to-sky-100/60 dark:from-white/[0.04] dark:to-white/[0.02] backdrop-blur-sm;
+  @apply shadow-sm shadow-sky-900/5 dark:shadow-none;
   @apply transition-all duration-300 ease-in-out;
 }
 
@@ -85,8 +103,8 @@ header.scrolled {
 }
 
 .chip {
-  @apply text-xs py-0.5 px-2 rounded-full border border-black/10 dark:border-white/15;
-  @apply bg-black/5 dark:bg-white/10 text-black/75 dark:text-white/75;
+  @apply text-xs py-0.5 px-2 rounded-full border border-sky-900/10 dark:border-white/15;
+  @apply bg-sky-100/80 dark:bg-white/10 text-slate-800 dark:text-white/75;
 }
 
 /** Page transitions (see PageLayout) */
@@ -161,7 +179,7 @@ article pre {
 }
 
 article blockquote {
-  @apply border-l-sky-400 dark:border-l-indigo-400 bg-sky-50/60 dark:bg-white/5 rounded-r-lg py-1 not-italic;
+  @apply border-l-sky-400 dark:border-l-indigo-400 bg-sky-100/60 dark:bg-white/5 rounded-r-lg py-1 not-italic;
 }
 
 article img {
