@@ -19,3 +19,9 @@ export function readingTime(html: string) {
   const readingTimeMinutes = ((wordCount / 200) + 1).toFixed()
   return `${readingTimeMinutes} min read`
 }
+
+// True when `tags` contains every selected tag (case-insensitive).
+export function hasAllTags(tags: string[], selected: Set<string>) {
+  const lower = tags.map((tag) => tag.toLowerCase())
+  return [...selected].every((tag) => lower.includes(tag.toLowerCase()))
+}
