@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content"
 import Gallery from "@components/Gallery.astro"
+import CodeBlocks from "@components/CodeBlocks.astro"
 
 type Props = {
   entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
@@ -43,6 +44,7 @@ const next = items[(index + 1) % items.length]
   <article>
     <Content/>
   </article>
+  <CodeBlocks />
   {items.length > 1 &&
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <a href={`/${prev.collection}/${prev.slug}`} class="group card card-hover p-4 gap-3 flex items-center">

@@ -36,6 +36,21 @@ gallery:                    # thumbnails that open in a lightbox
 
 Images are optimized automatically at build time. Inline images in the body (`![alt](./image.png)`) also work.
 
+### Code blocks
+
+Every fenced code block gets a header with the language name and a copy button. Consecutive blocks with the same `group` in the fence become one block with tabs:
+
+````md
+```luau tab="Luau" group="example"
+print("hi")
+```
+```ts tab="TypeScript" group="example"
+console.log("hi")
+```
+````
+
+`tab` defaults to the language name. Blocks must be directly adjacent (no text between them).
+
 ### Work stack chips
 
 ```yaml
