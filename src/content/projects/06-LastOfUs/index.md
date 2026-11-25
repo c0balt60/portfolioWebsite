@@ -2,6 +2,7 @@
 title: "Roblox: Last of Us"
 summary: "Worked on this game as part of CURRENT for winning gamejam"
 date: "Dec 31 2025"
+stack: ["Luau", "Roblox Studio"]
 draft: false
 tags:
 - Roblox

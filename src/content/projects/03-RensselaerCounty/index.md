@@ -2,6 +2,7 @@
 title: "Roblox: Rensselaer County"
 summary: "Established county & driving game"
 date: "Aug 5 2025"
+stack: ["Luau", "Roblox Studio"]
 draft: false
 tags:
 - Roblox

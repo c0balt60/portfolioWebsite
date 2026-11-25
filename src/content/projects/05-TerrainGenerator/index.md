@@ -2,6 +2,7 @@
 title: "Roblox: Terrain Generator"
 summary: "Personal place for testing a Terrain based map generator"
 date: "Mar 2 2026"
+stack: ["Luau", "Roblox Studio", "Pesde"]
 draft: false
 tags:
 - Roblox
