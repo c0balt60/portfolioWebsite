@@ -35,8 +35,8 @@ export default {
           to: { transform: "translateX(-50%)" },
         },
         drift: {
-          from: { transform: "translateX(-30vw)" },
-          to: { transform: "translateX(130vw)" },
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(100vw)" },
         },
         "fade-up": {
           from: { opacity: 0, transform: "translateY(12px)" },
