@@ -1,0 +1,20 @@
+---
+import { SKILLS } from "@consts"
+import TechIcon from "@components/TechIcon.astro"
+
+const items = SKILLS.flatMap((group) => group.ITEMS).filter((skill) => skill.carousel)
+---
+
+<div class="relative overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+  <ul class="flex w-max animate-marquee hover:[animation-play-state:paused]">
+    {[0, 1].map((copy) => items.map((skill) => (
+      <li
+        aria-hidden={copy === 1 ? "true" : undefined}
+        class="group mx-2 flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap text-sm border border-black/10 dark:border-white/15 bg-white/70 dark:bg-white/5 hover:text-black dark:hover:text-white blend"
+      >
+        <TechIcon skill={skill} class="size-5" />
+        {skill.name}
+      </li>
+    )))}
+  </ul>
+</div>

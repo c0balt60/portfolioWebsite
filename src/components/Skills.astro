@@ -1,0 +1,22 @@
+---
+import { SKILLS } from "@consts"
+import TechIcon from "@components/TechIcon.astro"
+---
+
+<div class="grid sm:grid-cols-2 gap-4">
+  {SKILLS.map((group) => (
+    <div class="card card-hover p-4">
+      <p class="text-xs font-semibold uppercase tracking-widest mb-3 text-sky-700 dark:text-sky-300">
+        {group.NAME}
+      </p>
+      <ul class="flex flex-wrap gap-2">
+        {group.ITEMS.map((skill) => (
+          <li class="group chip py-1 flex items-center gap-1.5 hover:text-black dark:hover:text-white blend">
+            <TechIcon skill={skill} class="size-4" />
+            {skill.name}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
