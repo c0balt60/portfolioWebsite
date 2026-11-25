@@ -51,6 +51,14 @@ console.log("hi")
 
 `tab` defaults to the language name. Blocks must be directly adjacent (no text between them).
 
+### Project stack
+
+List what a project was built with; names matching `SKILLS` get their icon:
+
+```yaml
+stack: ["Luau", "Roblox Studio", "Pesde"]
+```
+
 ### Work stack chips
 
 ```yaml

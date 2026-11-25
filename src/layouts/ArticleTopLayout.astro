@@ -4,6 +4,7 @@ import { Image } from "astro:assets"
 import { formatDate, readingTime } from "@lib/utils"
 import { vtName } from "@lib/vt"
 import ImageSkeleton from "@components/ImageSkeleton.astro"
+import TechStack from "@components/TechStack.astro"
 
 type Props = {
   entry: CollectionEntry<"projects"> | CollectionEntry<"blog">
@@ -16,6 +17,7 @@ const { title, summary, date } = data
 const demoUrl = collection === "projects" ? data.demoUrl : null
 const repoUrl = collection === "projects" ? data.repoUrl : null
 const cover = collection === "projects" ? data.cover : null
+const stack = collection === "projects" ? data.stack : null
 ---
 
 <div>
@@ -71,6 +73,11 @@ const cover = collection === "projects" ? data.cover : null
       </a>
     }
   </div> 
+  }
+  {!!stack?.length &&
+    <div class="mt-6">
+      <TechStack names={stack} />
+    </div>
   }
   {cover &&
     <ImageSkeleton transition:name={vtName("cover", slug)} class="mt-8 w-full aspect-video rounded-xl overflow-hidden border border-black/10 dark:border-white/15 shadow-xl shadow-sky-300/20 dark:shadow-indigo-500/10">

@@ -34,6 +34,7 @@ const projects = defineCollection({
     draft: z.boolean().optional(),
     demoUrl: z.string().optional(),
     repoUrl: z.string().optional(),
+    stack: z.array(z.string()).optional(),
     cover: image().optional(),
     gallery: z.array(image()).optional(),
   }),
