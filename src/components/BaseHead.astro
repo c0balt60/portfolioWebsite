@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions"
+
 interface Props {
   title: string
   description: string
@@ -46,6 +48,8 @@ const { title, description, image = "/thumbnail.png" } = Astro.props
 
 <!-- RSS Feed -->
 <link rel="alternate" type="application/rss+xml" title={title} href={`${Astro.site}rss.xml`}/>
+
+<ClientRouter />
 
 <!-- Global Scripts -->
 <script is:inline src="/js/theme.js"></script>

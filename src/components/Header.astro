@@ -6,7 +6,7 @@ const subpath = pathname.match(/[^/]+/g)
 import Container from "@components/Container.astro"
 ---
 
-<header id="header" class="fixed top-0 w-full h-16 z-50 ">
+<header id="header" transition:animate="none" class="fixed top-0 w-full h-16 z-50 ">
   <Container size="md">
     <div class="relative h-full w-full">
       <div class="absolute left-0 top-1/2 -translate-y-1/2 flex gap-1 font-semibold">
@@ -82,19 +82,13 @@ import Container from "@components/Container.astro"
   }
 </style>
 
-<script is:inline>
-  function toggleDrawer() {
+<script>
+  document.addEventListener("astro:page-load", () => {
     const drawer = document.getElementById("drawer")
     const drawerButton = document.getElementById("header-drawer-button")
-    drawer?.classList.toggle("open")
-    drawerButton?.classList.toggle("open")
-  }
-
-  function initializeDrawerButton() {
-    const drawerButton = document.getElementById("header-drawer-button")
-    drawerButton?.addEventListener("click", toggleDrawer)
-  }
-
-  document.addEventListener("astro:after-swap", initializeDrawerButton)
-  initializeDrawerButton()
+    drawerButton?.addEventListener("click", () => {
+      drawer?.classList.toggle("open")
+      drawerButton.classList.toggle("open")
+    })
+  })
 </script>

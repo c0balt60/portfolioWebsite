@@ -114,20 +114,25 @@ function duration(start: Date, end: Date | string) {
 </style>
 
 <script>
-  const timeline = document.getElementById("timeline")!
-  const progress = document.getElementById("timeline-progress")!
-  const nodes = [...timeline.querySelectorAll<HTMLElement>(".node")]
+  document.addEventListener("astro:page-load", () => {
+    const timeline = document.getElementById("timeline")
+    const progress = document.getElementById("timeline-progress")
+    if (!timeline || !progress) return
+    const nodes = [...timeline.querySelectorAll<HTMLElement>(".node")]
+    const cleanup = new AbortController()
+    document.addEventListener("astro:before-swap", () => cleanup.abort(), { once: true })
 
-  // Fill the line up to 60% of the viewport, and light up the stars it has passed.
-  function update() {
-    const anchor = window.innerHeight * 0.6
-    const rect = progress.getBoundingClientRect()
-    const fill = Math.min(Math.max((anchor - rect.top) / progress.offsetHeight, 0), 1)
-    progress.style.setProperty("--progress", String(fill))
-    nodes.forEach((node) => node.classList.toggle("lit", node.getBoundingClientRect().top < anchor))
-  }
+    // Fill the line up to 60% of the viewport, and light up the stars it has passed.
+    function update() {
+      const anchor = window.innerHeight * 0.6
+      const rect = progress!.getBoundingClientRect()
+      const fill = Math.min(Math.max((anchor - rect.top) / progress!.offsetHeight, 0), 1)
+      progress!.style.setProperty("--progress", String(fill))
+      nodes.forEach((node) => node.classList.toggle("lit", node.getBoundingClientRect().top < anchor))
+    }
 
-  window.addEventListener("scroll", update, { passive: true })
-  window.addEventListener("resize", update)
-  update()
+    window.addEventListener("scroll", update, { passive: true, signal: cleanup.signal })
+    window.addEventListener("resize", update, { signal: cleanup.signal })
+    update()
+  })
 </script>

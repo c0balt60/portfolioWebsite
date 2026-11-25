@@ -86,18 +86,24 @@ const next = items[(index + 1) % items.length]
 </style>
 
 <script>
-  // Reading progress bar.
-  const bar = document.getElementById("read-progress")!
-  function updateProgress() {
-    const max = document.documentElement.scrollHeight - window.innerHeight
-    bar.style.setProperty("--progress", String(max > 0 ? window.scrollY / max : 0))
-  }
-  window.addEventListener("scroll", updateProgress, { passive: true })
-  updateProgress()
+  document.addEventListener("astro:page-load", () => {
+    const bar = document.getElementById("read-progress")
+    if (!bar) return
+    // Window listeners outlive the page, so drop them on the next navigation.
+    const cleanup = new AbortController()
+    document.addEventListener("astro:before-swap", () => cleanup.abort(), { once: true })
 
-  // Table of contents: open on wide screens, highlight the section being read.
-  const toc = document.getElementById("toc") as HTMLDetailsElement | null
-  if (toc) {
+    // Reading progress bar.
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      bar!.style.setProperty("--progress", String(max > 0 ? window.scrollY / max : 0))
+    }
+    window.addEventListener("scroll", updateProgress, { passive: true, signal: cleanup.signal })
+    updateProgress()
+
+    // Table of contents: open on wide screens, highlight the section being read.
+    const toc = document.getElementById("toc") as HTMLDetailsElement | null
+    if (!toc) return
     if (window.matchMedia("(min-width: 1280px)").matches) toc.open = true
     const links = new Map([...toc.querySelectorAll<HTMLElement>("[data-toc]")].map((a) => [a.dataset.toc!, a]))
     const observer = new IntersectionObserver((entries) => {
@@ -110,5 +116,6 @@ const next = items[(index + 1) % items.length]
       const heading = document.getElementById(id)
       if (heading) observer.observe(heading)
     })
-  }
+    cleanup.signal.addEventListener("abort", () => observer.disconnect())
+  })
 </script>

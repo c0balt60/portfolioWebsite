@@ -92,5 +92,4 @@
     }
   }
 
-  document.addEventListener('astro:after-swap', initBG);
   initBG();

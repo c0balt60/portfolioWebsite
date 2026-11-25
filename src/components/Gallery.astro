@@ -30,27 +30,30 @@ const full = await Promise.all(images.map((src) => getImage({ src, width: Math.m
 </dialog>
 
 <script>
-  const dialog = document.getElementById("lightbox") as HTMLDialogElement
-  const img = dialog.querySelector("img")!
-  const thumbs = [...document.querySelectorAll<HTMLButtonElement>("[data-full]")]
-  let current = 0
+  document.addEventListener("astro:page-load", () => {
+    const dialog = document.getElementById("lightbox") as HTMLDialogElement | null
+    if (!dialog) return
+    const img = dialog.querySelector("img")!
+    const thumbs = [...document.querySelectorAll<HTMLButtonElement>("[data-full]")]
+    let current = 0
 
-  function show(index: number) {
-    current = (index + thumbs.length) % thumbs.length
-    img.src = thumbs[current].dataset.full!
-    img.alt = thumbs[current].querySelector("img")?.alt ?? ""
-  }
+    function show(index: number) {
+      current = (index + thumbs.length) % thumbs.length
+      img.src = thumbs[current].dataset.full!
+      img.alt = thumbs[current].querySelector("img")?.alt ?? ""
+    }
 
-  thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => {
-    show(i)
-    dialog.showModal()
-  }))
-  dialog.querySelectorAll<HTMLButtonElement>("[data-step]").forEach((button) =>
-    button.addEventListener("click", () => show(current + Number(button.dataset.step))))
-  // Clicking the backdrop (the dialog itself, not its content) closes it.
-  dialog.addEventListener("click", (e) => e.target === dialog && dialog.close())
-  dialog.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") show(current - 1)
-    if (e.key === "ArrowRight") show(current + 1)
+    thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => {
+      show(i)
+      dialog.showModal()
+    }))
+    dialog.querySelectorAll<HTMLButtonElement>("[data-step]").forEach((button) =>
+      button.addEventListener("click", () => show(current + Number(button.dataset.step))))
+    // Clicking the backdrop (the dialog itself, not its content) closes it.
+    dialog.addEventListener("click", (e) => e.target === dialog && dialog.close())
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") show(current - 1)
+      if (e.key === "ArrowRight") show(current + 1)
+    })
   })
 </script>

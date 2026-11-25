@@ -89,6 +89,15 @@ header.scrolled {
   @apply bg-black/5 dark:bg-white/10 text-black/75 dark:text-white/75;
 }
 
+/** Page transitions (see PageLayout) */
+@keyframes page-out {
+  to { opacity: 0; transform: translateY(-12px); filter: blur(4px); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+}
+
 /** Light theme particles on home page */
 @keyframes animateParticle {
   from {

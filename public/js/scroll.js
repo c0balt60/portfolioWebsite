@@ -8,3 +8,4 @@ function onScroll() {
 }
 
 document.addEventListener("scroll", onScroll)
+document.addEventListener("astro:page-load", onScroll)
