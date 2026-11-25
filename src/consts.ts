@@ -25,18 +25,6 @@ export const PROJECTS: Page = {
   DESCRIPTION: "Recent projects I have worked on.",
 }
 
-// Store Page
-export const STORE: Page = {
-  TITLE: "Store",
-  DESCRIPTION: "Purchase my services."
-}
-
-// Purchase Page
-export const PURCHASE: Page = {
-  TITLE: "Purchase",
-  DESCRIPTION: "Finalize your purchases."
-}
-
 // Search Page
 export const SEARCH: Page = {
   TITLE: "Search",
@@ -61,10 +49,6 @@ export const LINKS: Links = [
     TEXT: "Projects", 
     HREF: "/projects", 
   },
-  {
-    TEXT: "Store",
-    HREF: "/store"
-  }
 ]
 
 // Socials
@@ -94,4 +78,5 @@ export const SOCIALS: Socials = [
     HREF: "https://x.com/c0balt60129129",
   },
 ]
+
 

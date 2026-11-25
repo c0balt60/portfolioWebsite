@@ -17,11 +17,6 @@ const projects = (await getCollection("projects"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0,3)
 
-const stores = (await getCollection("store"))
-  .filter(store => !store.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0,3)
-
 const stack = [
   {
     text: "Astro",
