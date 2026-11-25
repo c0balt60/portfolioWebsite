@@ -8,6 +8,8 @@ import MeteorShower from "@components/MeteorShower.astro"
 import Clouds from "@components/Clouds.astro"
 import TechCarousel from "@components/TechCarousel.astro"
 import Skills from "@components/Skills.astro"
+import ProjectCard from "@components/ProjectCard"
+import { toProjectCard } from "@lib/projects"
 
 const posts = (await getCollection("blog"))
   .filter(post => !post.data.draft)
@@ -17,7 +19,9 @@ const posts = (await getCollection("blog"))
 const projects = (await getCollection("projects"))
   .filter(project => !project.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0,3)
+  .slice(0,4)
+
+const projectCards = await Promise.all(projects.map(toProjectCard))
 
 const stats = [
   { value: "5+", label: "years building on Roblox" },
@@ -157,10 +161,10 @@ const stats = [
             All projects
           </a>
         </div>
-        <ul class="space-y-4">
-          {projects.map((project) => (
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {projectCards.map((project) => (
             <li>
-              <ArrowCard entry={project} />
+              <ProjectCard project={project} />
             </li>
           ))}
         </ul>
