@@ -1,45 +1,50 @@
-## Roblox Developer Portfolio
-Welcome to my official Roblox developer portfolio! This repository contains the source code and files for my personal website, where I showcase the professional Roblox development services I offer. Whether you're interested in game scripting, systems development, or custom mechanics, you'll find all the details about my expertise here.
+# c0balt's Portfolio
 
-### Website Overview
-The portfolio website is designed to provide an easy-to-navigate platform where potential clients can learn about my services and get in touch for collaborations. The site is built using [technology stack, e.g., HTML, CSS, JavaScript, etc.] and highlights the following sections:
+Personal portfolio for Roblox game development and web work, live at [cobalt60.web.app](https://cobalt60.web.app).
+Sky themed: light mode is the day sky, dark mode is the night sky.
 
-**Home:** A brief introduction to my Roblox programming services.
-**Services:** Detailed breakdown of the various systems I can develop for Roblox games, including datastores, weapon systems, combat mechanics, and more.
-**About Me:** A brief overview of my experience and background in Roblox development.
-**Contact:** A simple form where clients can reach out to discuss potential projects or collaborations.
-What I Offer
-As a Roblox developer, I specialize in creating complex game mechanics and systems. Some of the key services I provide include:
+Built with [Astro](https://astro.build), [SolidJS](https://www.solidjs.com) and [Tailwind CSS](https://tailwindcss.com), hosted on Firebase.
 
-- Datastores
-- Weapon Systems
-- Combat Systems
-- Tycoons
-- Placement Systems
-- Tower Defense Games
-- Simulators
-- Shop Systems
-- Pet Systems
-- Inventory Systems
-- User Interface Programming
-- Character Manipulation
-or more details on each service, visit the Services page on the live site.
+## Development
 
-### Technologies Used
-- HTML5
-- CSS3
-- JavaScript
-- TypeScript
-- TailWind
-- SolidJs
+```sh
+pnpm install
+pnpm dev       # http://localhost:4321
+pnpm build     # type-check + build to dist/
+```
 
-Contributing
-If you’re interested in contributing to this project, feel free to fork the repository, make changes, and submit a pull request. All contributions are welcome!
+## Editing content
 
-----
+All content lives in `src/content/` as Markdown.
 
-License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+| Folder      | What it is | Notes |
+|-------------|------------|-------|
+| `blog/`     | Blog posts | `draft: true` hides a post |
+| `projects/` | Projects   | One folder per project, images go in the same folder |
+| `work/`     | Work timeline entries | `dateEnd: "Now"` marks a current job |
 
-Contact
-If you'd like to discuss a project or have any questions, feel free to contact me through the Contact page on my website or via email at youremail@example.com.
+### Project images
+
+Put images next to the project's `index.md` and reference them in the frontmatter:
+
+```yaml
+cover: ./cover.png          # shown on the card and as the page banner
+gallery:                    # thumbnails that open in a lightbox
+  - ./screenshot1.png
+  - ./screenshot2.png
+```
+
+Images are optimized automatically at build time. Inline images in the body (`![alt](./image.png)`) also work.
+
+### Work stack chips
+
+```yaml
+stack: ["Rojo", "Lune"]
+packages: ["Fusion", "Promise"]
+```
+
+### Skills and the icon carousel
+
+Edit `SKILLS` in `src/consts.ts`. Set `carousel: true` on an item to show it in the home page carousel.
+`icon` is a file name in `public/icons/` (without `.svg`); items without one show a monogram.
+Icons come from [Simple Icons](https://simpleicons.org), so any single-color SVG dropped into `public/icons/` works.
