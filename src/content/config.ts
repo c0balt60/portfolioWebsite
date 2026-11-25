@@ -7,6 +7,8 @@ const work = defineCollection({
     role: z.string(),
     dateStart: z.coerce.date(),
     dateEnd: z.union([z.coerce.date(), z.string()]),
+    stack: z.array(z.string()).optional(),
+    packages: z.array(z.string()).optional(),
   }),
 })
 
@@ -21,9 +23,10 @@ const blog = defineCollection({
   }),
 })
 
+// Images are paths relative to the project's folder, e.g. `cover: ./cover.png`
 const projects = defineCollection({
   type: "content",
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     summary: z.string(),
     date: z.coerce.date(),
@@ -31,6 +34,8 @@ const projects = defineCollection({
     draft: z.boolean().optional(),
     demoUrl: z.string().optional(),
     repoUrl: z.string().optional(),
+    cover: image().optional(),
+    gallery: z.array(image()).optional(),
   }),
 })
 
