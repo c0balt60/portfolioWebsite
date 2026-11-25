@@ -81,6 +81,17 @@ const next = items[(index + 1) % items.length]
   }
 </div>
 
+<style is:global>
+  .heading-anchor {
+    @apply ml-2 no-underline opacity-0 text-sky-500 dark:text-indigo-300 transition-opacity duration-200;
+  }
+
+  article :is(h2, h3):hover .heading-anchor,
+  .heading-anchor:focus-visible {
+    @apply opacity-100;
+  }
+</style>
+
 <style>
   [data-toc].active {
     @apply opacity-100 font-semibold text-sky-700 dark:text-sky-300;
@@ -102,6 +113,17 @@ const next = items[(index + 1) % items.length]
     }
     window.addEventListener("scroll", updateProgress, { passive: true, signal: cleanup.signal })
     updateProgress()
+
+    // Hover "#" links on headings so sections can be shared.
+    document.querySelectorAll<HTMLElement>("article :is(h2, h3)[id]").forEach((h) => {
+      if (h.querySelector(".heading-anchor")) return
+      const a = document.createElement("a")
+      a.href = `#${h.id}`
+      a.className = "heading-anchor"
+      a.ariaLabel = `Link to ${h.textContent}`
+      a.textContent = "#"
+      h.append(a)
+    })
 
     // Table of contents: open on wide screens, highlight the section being read.
     const toc = document.getElementById("toc") as HTMLDetailsElement | null
