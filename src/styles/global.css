@@ -10,7 +10,7 @@
     font-style: normal;
     font-display: swap;
   }
-  
+
   @font-face {
     font-family: "Atkinson";
     src: url("/fonts/atkinson-bold.woff") format("woff");
@@ -25,7 +25,7 @@ html {
   color-scheme: light;
   background-color: white;
   font-family: "Atkinson", sans-serif;
-  
+  scroll-behavior: smooth;
 }
 
 html.dark {
@@ -63,16 +63,30 @@ header.scrolled {
   @apply backdrop-blur-sm saturate-200;
 }
 
-article {
-  @apply prose dark:prose-invert max-w-full pb-12;
-}
-
 .page-heading {
-  @apply font-semibold text-black dark:text-white;
+  @apply text-4xl md:text-5xl font-bold tracking-tight;
+  @apply bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-200 dark:to-indigo-300 bg-clip-text text-transparent;
 }
 
 .blend {
   @apply transition-all duration-300 ease-in-out;
+}
+
+/** Glass card used across the site */
+.card {
+  @apply rounded-xl border border-black/10 dark:border-white/15;
+  @apply bg-white/60 dark:bg-white/[0.03] backdrop-blur-sm;
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.card-hover {
+  @apply hover:-translate-y-0.5 hover:border-sky-400/60 dark:hover:border-indigo-400/50;
+  @apply hover:shadow-lg hover:shadow-sky-300/30 dark:hover:shadow-indigo-500/20;
+}
+
+.chip {
+  @apply text-xs py-0.5 px-2 rounded-full border border-black/10 dark:border-white/15;
+  @apply bg-black/5 dark:bg-white/10 text-black/75 dark:text-white/75;
 }
 
 /** Light theme particles on home page */
@@ -85,30 +99,78 @@ article {
   }
 }
 
-/** styles for public /animation.js */
+/** Scroll reveal, driven by public/js/animate.js */
 .animate {
   opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate.from-left {
+  transform: translateX(-40px);
+}
+
+.animate.from-right {
+  transform: translateX(40px);
 }
 
 .animate.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+}
+
+/**
+ * Articles (blog posts and projects)
+ */
+article {
+  @apply prose dark:prose-invert max-w-full pb-12;
+}
+
+article :is(h2, h3, h4) {
+  @apply scroll-mt-24;
+}
+
+article h2 {
+  @apply pb-2 border-b border-black/10 dark:border-white/15;
+}
+
+article a {
+  @apply text-sky-700 dark:text-sky-300 decoration-sky-400/40 underline-offset-2 hover:decoration-sky-400;
+}
+
+article :not(pre) > code {
+  @apply px-1.5 py-0.5 rounded-md font-normal bg-black/5 dark:bg-white/10 text-black dark:text-white;
+}
+
+article :not(pre) > code::before,
+article :not(pre) > code::after {
+  content: none;
+}
+
+article pre {
+  @apply rounded-xl border border-black/10 dark:border-white/15 text-sm;
+}
+
+article blockquote {
+  @apply border-l-sky-400 dark:border-l-indigo-400 bg-sky-50/60 dark:bg-white/5 rounded-r-lg py-1 not-italic;
 }
 
 article img {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  display: block;
-  margin: 0 auto;
+  @apply rounded-xl mx-auto block;
+}
+
+/** Shiki dual theme: switch code colors with the site theme */
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
 }
 
 /**
  * TWINKLE STARS
  */
 
- #twinkle-star.template {
+#twinkle-star.template {
   @apply absolute -left-full; /* hide offscreen */
 }
 
@@ -116,13 +178,12 @@ article img {
   @apply animate-twinkle; /* defined in tailwind.config */
 }
 
-
 /**
  * Meteors
  */
 
 #meteors .shower {
-  @apply absolute inset-0 top-0;;
+  @apply absolute inset-0 top-0;
   @apply left-1/2 -translate-x-1/2;
   @apply w-screen aspect-square;
 }
@@ -149,13 +210,12 @@ article img {
   @apply rotate-315;
 }
 
-
 /**
-  * Gradients
-  */
+ * Gradients
+ */
 
 .bg-gradient-radial {
-  background-image: radial-gradient(rgb(175, 114, 0), rgb(24, 0, 63),rgb(0, 0, 0));
+  background-image: radial-gradient(rgb(175, 114, 0), rgb(24, 0, 63), rgb(0, 0, 0));
 }
 
 .bg-gradient-w {
@@ -166,18 +226,13 @@ article img {
   @apply bg-gradient-to-b from-blue-400 dark:from-indigo-950 to-15% dark:to-black;
 }
 
-.astro:hover {
-  @apply bg-purple-500 dark:bg-purple-900;
-}
-
-.javascript:hover {
-  @apply bg-yellow-500 dark:bg-yellow-900;
-}
-
-.typescript:hover {
-  @apply bg-blue-300 dark:bg-blue-900;
-}
-
-.tailwind:hover {
-  @apply bg-indigo-300 dark:bg-indigo-900;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

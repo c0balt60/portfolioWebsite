@@ -25,8 +25,23 @@ export default {
       animation: {
         twinkle: "twinkle 2s ease-in-out forwards",
         meteor: "meteor 3s ease-in-out forwards",
+        marquee: "marquee 40s linear infinite",
+        drift: "drift 60s linear infinite",
+        "fade-up": "fade-up 0.4s ease-out both",
       },
       keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        drift: {
+          from: { transform: "translateX(-30vw)" },
+          to: { transform: "translateX(130vw)" },
+        },
+        "fade-up": {
+          from: { opacity: 0, transform: "translateY(12px)" },
+          to: { opacity: 1, transform: "none" },
+        },
         twinkle: {
           "0%": { 
             opacity: 0, 
