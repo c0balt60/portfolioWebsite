@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content"
+import Gallery from "@components/Gallery.astro"
 
 type Props = {
   entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
@@ -20,6 +21,9 @@ const next = items[(index + 1) % items.length]
 ---
 
 <div>
+  {entry.collection === "projects" && !!entry.data.gallery?.length &&
+    <Gallery images={entry.data.gallery} title={entry.data.title} />
+  }
   <article>
     <Content/>
   </article>

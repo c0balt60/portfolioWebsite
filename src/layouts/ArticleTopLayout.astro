@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content"
+import { Image } from "astro:assets"
 import { formatDate, readingTime } from "@lib/utils"
 
 type Props = {
@@ -12,6 +13,7 @@ const { title, summary, date } = data
 
 const demoUrl = collection === "projects" ? data.demoUrl : null
 const repoUrl = collection === "projects" ? data.repoUrl : null
+const cover = collection === "projects" ? data.cover : null
 ---
 
 <div>
@@ -67,5 +69,8 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
       </a>
     }
   </div> 
+  }
+  {cover &&
+    <Image src={cover} alt={title} width={1200} loading="eager" class="mt-8 w-full aspect-video object-cover rounded-xl border border-black/10 dark:border-white/15 shadow-xl shadow-sky-300/20 dark:shadow-indigo-500/10" />
   }
 </div>
