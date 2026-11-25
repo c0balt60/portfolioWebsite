@@ -1,0 +1,24 @@
+---
+// Wrapper that shows a pulsing placeholder until its <img> loads, then fades the image in.
+// Usage: <ImageSkeleton class="..."><Image data-skeleton ... /></ImageSkeleton>
+const { class: className = "", ...rest } = Astro.props
+---
+
+<div data-skeleton-wrap {...rest} class:list={["group/skel animate-pulse bg-sky-200/60 dark:bg-white/10 data-[loaded]:animate-none data-[loaded]:bg-transparent dark:data-[loaded]:bg-transparent", className]}>
+  <slot />
+</div>
+
+<!-- Without JS the load script never runs, so just show the image. -->
+<noscript><style>[data-skeleton-wrap] img { opacity: 1 !important; }</style></noscript>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>("[data-skeleton-wrap]").forEach((wrap) => {
+      const img = wrap.querySelector("img")
+      const done = () => (wrap.dataset.loaded = "")
+      if (!img || img.complete) return done()
+      img.addEventListener("load", done, { once: true })
+      img.addEventListener("error", done, { once: true })
+    })
+  })
+</script>

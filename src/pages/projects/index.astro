@@ -4,6 +4,7 @@ import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import Projects from "@components/Projects"
+import Skeleton from "@components/Skeleton.astro"
 import { PROJECTS } from "@consts"
 import { toProjectCard } from "@lib/projects"
 
@@ -26,7 +27,9 @@ const tags = [...new Set(projects.flatMap(project => project.tags))]
   </TopLayout>
   <BottomLayout>
     <div class="animate">
-      <Projects client:load tags={tags} data={projects} />
+      <Projects client:only="solid-js" tags={tags} data={projects}>
+        <Skeleton slot="fallback" variant="projects" />
+      </Projects>
     </div>
   </BottomLayout>
 </PageLayout>
