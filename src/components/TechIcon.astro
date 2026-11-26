@@ -1,0 +1,48 @@
+---
+import type { Skill } from "@types"
+
+type Props = {
+  skill: Skill
+  class?: string
+}
+
+const { skill, class: className } = Astro.props
+---
+
+{skill.icon ? (
+  <span
+    aria-hidden="true"
+    class:list={["tech-icon block shrink-0", className]}
+    style={`--icon:url(/icons/${skill.icon}.svg);--brand:${skill.color}`}
+  />
+) : (
+  <span
+    aria-hidden="true"
+    class:list={["tech-mono shrink-0 grid place-items-center rounded-md border border-current font-bold leading-none", className]}
+    style={`--brand:${skill.color}`}
+  >
+    {skill.name.slice(0, 2)}
+  </span>
+)}
+
+<style>
+  .tech-icon {
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+    transition: background-color 0.3s ease;
+  }
+
+  .tech-mono {
+    font-size: 0.55em;
+    transition: color 0.3s ease;
+  }
+
+  :global(.group:hover) .tech-icon {
+    background-color: var(--brand);
+  }
+
+  :global(.group:hover) .tech-mono {
+    color: var(--brand);
+  }
+</style>

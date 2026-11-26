@@ -1,4 +1,4 @@
-import type { Site, Page, Links, Socials } from "@types"
+import type { Site, Page, Links, Socials, SkillGroup } from "@types"
 
 // Global
 export const SITE: Site = {
@@ -25,18 +25,6 @@ export const PROJECTS: Page = {
   DESCRIPTION: "Recent projects I have worked on.",
 }
 
-// Store Page
-export const STORE: Page = {
-  TITLE: "Store",
-  DESCRIPTION: "Purchase my services."
-}
-
-// Purchase Page
-export const PURCHASE: Page = {
-  TITLE: "Purchase",
-  DESCRIPTION: "Finalize your purchases."
-}
-
 // Search Page
 export const SEARCH: Page = {
   TITLE: "Search",
@@ -61,10 +49,6 @@ export const LINKS: Links = [
     TEXT: "Projects", 
     HREF: "/projects", 
   },
-  {
-    TEXT: "Store",
-    HREF: "/store"
-  }
 ]
 
 // Socials
@@ -95,3 +79,50 @@ export const SOCIALS: Socials = [
   },
 ]
 
+
+// Skills: `carousel: true` puts the item in the home page icon carousel.
+// `icon` is a file name in /public/icons (without .svg); omit it to show a monogram.
+// `color` is the brand color used on hover.
+export const SKILLS: SkillGroup[] = [
+  {
+    NAME: "Languages",
+    ITEMS: [
+      { name: "Luau", icon: "lua", color: "#00A2FF", carousel: true },
+      { name: "TypeScript", icon: "typescript", color: "#3178C6", carousel: true },
+      { name: "JavaScript", icon: "javascript", color: "#F7DF1E", carousel: true },
+      { name: "HTML / CSS", icon: "html5", color: "#E34F26", carousel: true },
+    ],
+  },
+  {
+    NAME: "Roblox",
+    ITEMS: [
+      { name: "Roblox Studio", icon: "robloxstudio", color: "#00A2FF", carousel: true },
+      { name: "Rojo", color: "#E13835", carousel: true },
+      { name: "Lune", color: "#8B5CF6", carousel: true },
+      { name: "Pesde", color: "#F59E0B" },
+      { name: "darklua", color: "#6366F1" },
+      { name: "Selene", color: "#F472B6" },
+      { name: "React-lua", color: "#61DAFB", carousel: true },
+      { name: "Fusion", color: "#22D3EE", carousel: true },
+      { name: "Reflex", color: "#A78BFA" },
+    ],
+  },
+  {
+    NAME: "Web",
+    ITEMS: [
+      { name: "Astro", icon: "astro", color: "#FF5D01", carousel: true },
+      { name: "SolidJS", icon: "solid", color: "#2C4F7C", carousel: true },
+      { name: "Tailwind", icon: "tailwindcss", color: "#06B6D4", carousel: true },
+      { name: "Node.js", icon: "nodedotjs", color: "#5FA04E", carousel: true },
+    ],
+  },
+  {
+    NAME: "Tools",
+    ITEMS: [
+      { name: "Git", icon: "git", color: "#F05032", carousel: true },
+      { name: "GitHub", icon: "github", color: "#8B949E", carousel: true },
+      { name: "VS Code", color: "#007ACC" },
+      { name: "Firebase", icon: "firebase", color: "#FFCA28", carousel: true },
+    ],
+  },
+]

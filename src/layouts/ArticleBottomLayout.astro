@@ -1,14 +1,17 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content"
+import Gallery from "@components/Gallery.astro"
+import CodeBlocks from "@components/CodeBlocks.astro"
 
 type Props = {
-  entry: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"store">
+  entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
 }
 
 // Get the requested entry
 const { entry } = Astro.props
 const { collection } = entry
-const { Content } = await entry.render()
+const { Content, headings } = await entry.render()
+const toc = headings.filter(h => h.depth === 2 || h.depth === 3)
 
 // Get the next and prev entries (modulo to wrap index)
 const items = (await getCollection(collection))
@@ -20,11 +23,31 @@ const next = items[(index + 1) % items.length]
 ---
 
 <div>
+  <div id="read-progress" aria-hidden="true" class="fixed top-0 inset-x-0 h-0.5 z-[60] origin-left bg-gradient-to-r from-sky-400 to-indigo-500" style="transform: scaleX(var(--progress, 0))"></div>
+
+  {toc.length >= 3 &&
+    <details id="toc" class="card p-4 mb-8 xl:fixed xl:top-36 xl:left-[max(1rem,calc(50%-24rem-17rem))] xl:w-60 xl:mb-0 xl:max-h-[70vh] xl:overflow-auto">
+      <summary class="cursor-pointer text-sm font-semibold uppercase text-black dark:text-white">On this page</summary>
+      <ul class="mt-3 space-y-1.5 text-sm">
+        {toc.map(h => (
+          <li class:list={[h.depth === 3 && "pl-3"]}>
+            <a href={`#${h.slug}`} data-toc={h.slug} class="block opacity-70 hover:opacity-100 hover:text-black dark:hover:text-white blend">{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  }
+
+  {entry.collection === "projects" && !!entry.data.gallery?.length &&
+    <Gallery images={entry.data.gallery} title={entry.data.title} />
+  }
   <article>
     <Content/>
   </article>
+  <CodeBlocks />
+  {items.length > 1 &&
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <a href={`/${prev.collection}/${prev.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-black/5 hover:dark:bg-white/10 border-black/15 dark:border-white/20 blend">
+    <a href={`/${prev.collection}/${prev.slug}`} class="group card card-hover p-4 gap-3 flex items-center">
       <div class="order-2 w-full h-full group-hover:text-black group-hover:dark:text-white blend">
         <div class="flex flex-wrap gap-2">
           <div class="text-sm uppercase">
@@ -40,7 +63,7 @@ const next = items[(index + 1) % items.length]
         <polyline points="12 5 19 12 12 19" class="translate-x-0 group-hover:translate-x-1 transition-all duration-300 ease-in-out" />
       </svg>
     </a>
-    <a href={`/${next.collection}/${next.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-black/5 hover:dark:bg-white/10 border-black/15 dark:border-white/20 transition-colors duration-300 ease-in-out">
+    <a href={`/${next.collection}/${next.slug}`} class="group card card-hover p-4 gap-3 flex items-center">
       <div class="w-full h-full text-right group-hover:text-black group-hover:dark:text-white blend">
         <div class="text-sm uppercase">
           Next
@@ -55,4 +78,68 @@ const next = items[(index + 1) % items.length]
       </svg>
     </a>
   </div>
+  }
 </div>
+
+<style is:global>
+  .heading-anchor {
+    @apply ml-2 no-underline opacity-0 text-sky-500 dark:text-indigo-300 transition-opacity duration-200;
+  }
+
+  article :is(h2, h3):hover .heading-anchor,
+  .heading-anchor:focus-visible {
+    @apply opacity-100;
+  }
+</style>
+
+<style>
+  [data-toc].active {
+    @apply opacity-100 font-semibold text-sky-700 dark:text-sky-300;
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const bar = document.getElementById("read-progress")
+    if (!bar) return
+    // Window listeners outlive the page, so drop them on the next navigation.
+    const cleanup = new AbortController()
+    document.addEventListener("astro:before-swap", () => cleanup.abort(), { once: true })
+
+    // Reading progress bar.
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      bar!.style.setProperty("--progress", String(max > 0 ? window.scrollY / max : 0))
+    }
+    window.addEventListener("scroll", updateProgress, { passive: true, signal: cleanup.signal })
+    updateProgress()
+
+    // Hover "#" links on headings so sections can be shared.
+    document.querySelectorAll<HTMLElement>("article :is(h2, h3)[id]").forEach((h) => {
+      if (h.querySelector(".heading-anchor")) return
+      const a = document.createElement("a")
+      a.href = `#${h.id}`
+      a.className = "heading-anchor"
+      a.ariaLabel = `Link to ${h.textContent}`
+      a.textContent = "#"
+      h.append(a)
+    })
+
+    // Table of contents: open on wide screens, highlight the section being read.
+    const toc = document.getElementById("toc") as HTMLDetailsElement | null
+    if (!toc) return
+    if (window.matchMedia("(min-width: 1280px)").matches) toc.open = true
+    const links = new Map([...toc.querySelectorAll<HTMLElement>("[data-toc]")].map((a) => [a.dataset.toc!, a]))
+    const observer = new IntersectionObserver((entries) => {
+      entries.filter((e) => e.isIntersecting).forEach((e) => {
+        links.forEach((link) => link.classList.remove("active"))
+        links.get(e.target.id)?.classList.add("active")
+      })
+    }, { rootMargin: "0px 0px -70% 0px" })
+    links.forEach((_, id) => {
+      const heading = document.getElementById(id)
+      if (heading) observer.observe(heading)
+    })
+    cleanup.signal.addEventListener("abort", () => observer.disconnect())
+  })
+</script>

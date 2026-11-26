@@ -2,6 +2,7 @@
 title: "Website: DamaxAuto"
 summary: "A simple website for an auto repair store"
 date: "April 24 2024"
+stack: ["Astro"]
 draft: false
 tags:
 - Astro

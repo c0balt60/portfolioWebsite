@@ -1,0 +1,68 @@
+---
+import { Image, getImage } from "astro:assets"
+import type { ImageMetadata } from "astro"
+import ImageSkeleton from "@components/ImageSkeleton.astro"
+
+type Props = {
+  images: ImageMetadata[]
+  title: string
+}
+
+const { images, title } = Astro.props
+const full = await Promise.all(images.map((src) => getImage({ src, width: Math.min(src.width, 1920), format: "webp" })))
+---
+
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10">
+  {images.map((image, i) => (
+    <button type="button" data-full={full[i].src} class="group card card-hover overflow-hidden aspect-video cursor-zoom-in">
+      <ImageSkeleton class="size-full">
+        <Image src={image} alt={`${title} screenshot ${i + 1}`} width={600} class="size-full object-cover opacity-0 transition duration-500 group-data-[loaded]/skel:opacity-100 group-hover:scale-105" />
+      </ImageSkeleton>
+    </button>
+  ))}
+</div>
+
+<dialog id="lightbox" class="bg-transparent p-0 max-w-[95vw] max-h-[95vh] backdrop:bg-black/80 backdrop:backdrop-blur-sm">
+  <img alt="" class="max-h-[85vh] max-w-[95vw] w-auto rounded-xl transition-opacity duration-300" />
+  {images.length > 1 && (
+    <div class="flex justify-center gap-2 mt-3">
+      <button type="button" data-step="-1" aria-label="Previous image" class="px-4 py-1 rounded-full bg-white/10 text-white hover:bg-white/25 blend">←</button>
+      <button type="button" data-step="1" aria-label="Next image" class="px-4 py-1 rounded-full bg-white/10 text-white hover:bg-white/25 blend">→</button>
+    </div>
+  )}
+</dialog>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const dialog = document.getElementById("lightbox") as HTMLDialogElement | null
+    if (!dialog) return
+    const img = dialog.querySelector("img")!
+    const thumbs = [...document.querySelectorAll<HTMLButtonElement>("[data-full]")]
+    let current = 0
+    const ready = () => img.classList.remove("opacity-0", "animate-pulse", "bg-white/10", "min-h-[40vh]", "min-w-[60vw]")
+    img.addEventListener("load", ready)
+    img.addEventListener("error", ready)
+
+    function show(index: number) {
+      current = (index + thumbs.length) % thumbs.length
+      // Pulse + hide until the new image has loaded.
+      img.classList.add("opacity-0", "animate-pulse", "bg-white/10", "min-h-[40vh]", "min-w-[60vw]")
+      img.src = thumbs[current].dataset.full!
+      if (img.complete) ready()
+      img.alt = thumbs[current].querySelector("img")?.alt ?? ""
+    }
+
+    thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => {
+      show(i)
+      dialog.showModal()
+    }))
+    dialog.querySelectorAll<HTMLButtonElement>("[data-step]").forEach((button) =>
+      button.addEventListener("click", () => show(current + Number(button.dataset.step))))
+    // Clicking the backdrop (the dialog itself, not its content) closes it.
+    dialog.addEventListener("click", (e) => e.target === dialog && dialog.close())
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") show(current - 1)
+      if (e.key === "ArrowRight") show(current + 1)
+    })
+  })
+</script>

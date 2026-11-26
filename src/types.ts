@@ -18,3 +18,15 @@ export type Socials = {
   TEXT: string
   HREF: string
 }[]
+
+export type Skill = {
+  name: string
+  icon?: string
+  color: string
+  carousel?: boolean
+}
+
+export type SkillGroup = {
+  NAME: string
+  ITEMS: Skill[]
+}

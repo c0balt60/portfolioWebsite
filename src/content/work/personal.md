@@ -6,4 +6,4 @@ dateEnd: "1/1/2024"
 ---
 
 A passion project that was my starting point for game development in Roblox.
-Project to be resumed during the summer of 2026
+Project to be resumed during the summer of 2026.

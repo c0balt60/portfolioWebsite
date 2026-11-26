@@ -1,72 +1,53 @@
 import type { CollectionEntry } from "astro:content"
-import { createEffect, createSignal, For } from "solid-js"
+import { createMemo, createSignal, For, Show } from "solid-js"
 import ArrowCard from "@components/ArrowCard"
-import { cn } from "@lib/utils"
+import TagFilter, { toggleTag } from "@components/TagFilter"
+import { formatDate, hasAllTags, readingTime } from "@lib/utils"
 
 type Props = {
   tags: string[]
   data: CollectionEntry<"blog">[]
 }
 
-export default function Blog({ data, tags }: Props) {
+export default function Blog(props: Props) {
   const [filter, setFilter] = createSignal(new Set<string>())
-  const [posts, setPosts] = createSignal<CollectionEntry<"blog">[]>([])
-
-  createEffect(() => {
-    setPosts(data.filter((entry) => 
-      Array.from(filter()).every((value) => 
-        entry.data.tags.some((tag:string) => 
-          tag.toLowerCase() === String(value).toLowerCase()
-        )
-      )
-    ))
-  })
-
-  function toggleTag(tag: string) {
-    setFilter((prev) => 
-      new Set(prev.has(tag) 
-        ? [...prev].filter((t) => t !== tag) 
-        : [...prev, tag]
-      )
-    )
-  }
+  const posts = createMemo(() => props.data.filter((post) => hasAllTags(post.data.tags, filter())))
+  // The newest post is featured while no filter is active.
+  const featured = () => (filter().size === 0 ? posts()[0] : undefined)
+  const rest = () => (featured() ? posts().slice(1) : posts())
 
   return (
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div class="col-span-3 sm:col-span-1">
-        <div class="sticky top-24">
-          <div class="text-sm font-semibold uppercase mb-2 text-black dark:text-white">Filter</div>
-          <ul class="flex flex-wrap sm:flex-col gap-1.5">
-            <For each={tags}>
-              {(tag) => (
-                <li>
-                  <button onClick={() => toggleTag(tag)} class={cn("w-full px-2 py-1 rounded", "whitespace-nowrap overflow-hidden overflow-ellipsis", "flex gap-2 items-center", "bg-black/5 dark:bg-white/10", "hover:bg-black/10 hover:dark:bg-white/15", "transition-colors duration-300 ease-in-out", filter().has(tag) && "text-black dark:text-white")}>
-                    <svg class={cn("size-5 fill-black/50 dark:fill-white/50", "transition-colors duration-300 ease-in-out", filter().has(tag) && "fill-black dark:fill-white")}>
-                      <use href={`/ui.svg#square`} class={cn(!filter().has(tag) ? "block" : "hidden")} />
-                      <use href={`/ui.svg#square-check`} class={cn(filter().has(tag) ? "block" : "hidden")} />
-                    </svg>
-                    {tag}
-                  </button>
-                </li>
-              )}
-            </For>
-          </ul>
-        </div>
+    <div class="space-y-6">
+      <TagFilter tags={props.tags} selected={filter()} onToggle={(tag) => setFilter(toggleTag(filter(), tag))} onClear={() => setFilter(new Set<string>())} />
+      <Show when={featured()}>
+        {(post) => (
+          <a href={`/blog/${post().slug}`} class="group relative block card card-hover overflow-hidden p-6 md:p-8">
+            <div aria-hidden="true" class="absolute -top-24 -right-24 size-64 rounded-full bg-sky-300/40 dark:bg-indigo-600/20 blur-3xl transition-transform duration-700 group-hover:scale-125" />
+            <div class="relative">
+              <div class="flex flex-wrap items-center gap-2 text-xs uppercase">
+                <span class="chip normal-case border-sky-400/50 text-sky-700 dark:text-sky-300">Latest</span>
+                <span>{formatDate(post().data.date)}</span>
+                <span>· {readingTime(post().body)}</span>
+              </div>
+              <div class="mt-3 text-2xl font-bold text-black dark:text-white">{post().data.title}</div>
+              <div class="mt-2">{post().data.summary}</div>
+              <div class="mt-4 text-sm font-semibold text-black dark:text-white group-hover:translate-x-1 blend">Read post →</div>
+            </div>
+          </a>
+        )}
+      </Show>
+      <div class="text-sm uppercase">
+        Showing {posts().length} of {props.data.length} posts
       </div>
-      <div class="col-span-3 sm:col-span-2">
-        <div class="flex flex-col">
-          <div class="text-sm uppercase mb-2">
-            SHOWING {posts().length} OF {data.length} POSTS
-          </div>
-          <ul class="flex flex-col gap-3">
-            {posts().map((post) => (
-              <li>
-                <ArrowCard entry={post} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <ul class="flex flex-col gap-3">
+        <For each={rest()}>
+          {(post) => (
+            <li class="animate-fade-up">
+              <ArrowCard entry={post} />
+            </li>
+          )}
+        </For>
+      </ul>
     </div>
   )
 }

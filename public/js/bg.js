@@ -33,7 +33,7 @@
       height: 1px;
       border-radius: 50%;
       box-shadow: ${particlesSmall};
-      animation: animStar 50s linear infinite;
+      animation: animateParticle 50s linear infinite;
       `;
     }
 
@@ -92,5 +92,4 @@
     }
   }
 
-  document.addEventListener('astro:after-swap', initBG);
   initBG();

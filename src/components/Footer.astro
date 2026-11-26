@@ -3,7 +3,7 @@ import { SITE, SOCIALS } from "@consts";
 import Container from "@components/Container.astro";
 ---
 
-<footer class="relative bg-white dark:bg-black">
+<footer transition:animate="none" class="relative border-t border-sky-900/10 dark:border-white/10">
   <div class="animate">
     <section class="py-5">
       <Container size="md">
@@ -56,9 +56,6 @@ import Container from "@components/Container.astro";
               href="/"
               class="flex gap-1 w-fit font-semibold text-current hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"
             >
-              <!-- <svg class="size-6 fill-current">
-                <use href="/brand.svg#brand"/>
-              </svg> -->
               {SITE.TITLE}
             </a>
           </div>
@@ -100,6 +97,10 @@ import Container from "@components/Container.astro";
               </a>
             </div>
             <div class="text-sm mt-2">&copy; 2026 | All rights reserved</div>
+            <div class="text-xs mt-1 opacity-60">
+              Built with <a href="https://astro.build" target="_blank" class="underline underline-offset-2 hover:text-black dark:hover:text-white">Astro</a>
+              &amp; <a href="https://www.solidjs.com" target="_blank" class="underline underline-offset-2 hover:text-black dark:hover:text-white">SolidJS</a>
+            </div>
           </div>
 
           <div class="order-1 sm:order-2 flex justify-center sm:justify-end">
@@ -126,20 +127,11 @@ import Container from "@components/Container.astro";
   </div>
 </footer>
 
-<script is:inline>
-  function goBackToTop(event) {
-    event.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-
-  function inintializeBackToTop() {
-    const backToTop = document.getElementById("back-to-top");
-    backToTop?.addEventListener("click", goBackToTop);
-  }
-
-  document.addEventListener("astro:after-swap", inintializeBackToTop);
-  inintializeBackToTop();
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document.getElementById("back-to-top")?.addEventListener("click", (event) => {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    })
+  })
 </script>

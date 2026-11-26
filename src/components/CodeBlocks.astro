@@ -1,0 +1,116 @@
+<script>
+  const LANGS: Record<string, string> = {
+    luau: "Luau", lua: "Lua", ts: "TypeScript", typescript: "TypeScript", js: "JavaScript", javascript: "JavaScript",
+    tsx: "TSX", jsx: "JSX", json: "JSON", jsonc: "JSON", css: "CSS", html: "HTML", astro: "Astro", md: "Markdown",
+    mdx: "MDX", sh: "Shell", bash: "Bash", shell: "Shell", yaml: "YAML", yml: "YAML", toml: "TOML", py: "Python",
+    python: "Python", rs: "Rust", rust: "Rust", go: "Go", cs: "C#", cpp: "C++", c: "C", sql: "SQL", diff: "Diff",
+  }
+  const pretty = (l: string) => LANGS[l.toLowerCase()] ?? l
+  const CHECK = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`
+  const COPY = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
+
+  function enhance(group: HTMLPreElement[]) {
+    const wrap = document.createElement("div")
+    wrap.className = "code-block"
+    const bar = document.createElement("div")
+    bar.className = "code-bar"
+    const tabs = document.createElement("div")
+    tabs.className = "code-tabs"
+    const copy = document.createElement("button")
+    copy.type = "button"
+    copy.className = "code-copy"
+    copy.setAttribute("aria-label", "Copy code")
+    copy.innerHTML = `${COPY}<span>Copy</span>`
+    bar.append(tabs, copy)
+    group[0].before(wrap)
+    wrap.append(bar, ...group)
+
+    let active = group[0]
+    const buttons = group.map((pre) => {
+      pre.dataset.enhanced = "1"
+      const label = pre.dataset.tab || pretty(pre.dataset.lang || "text")
+      if (group.length === 1) {
+        const span = document.createElement("span")
+        span.className = "code-lang"
+        span.textContent = label
+        tabs.append(span)
+        return null
+      }
+      const b = document.createElement("button")
+      b.type = "button"
+      b.setAttribute("role", "tab")
+      b.className = "code-tab"
+      b.textContent = label
+      b.onclick = () => select(pre)
+      tabs.append(b)
+      return b
+    })
+    if (group.length > 1) tabs.setAttribute("role", "tablist")
+
+    function select(pre: HTMLPreElement) {
+      active = pre
+      group.forEach((p, i) => {
+        p.hidden = p !== pre
+        const b = buttons[i]
+        if (!b) return
+        b.setAttribute("aria-selected", String(p === pre))
+        b.tabIndex = p === pre ? 0 : -1
+      })
+    }
+    select(active)
+
+    tabs.onkeydown = (e) => {
+      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0
+      if (!d || group.length < 2) return
+      const next = group[(group.indexOf(active) + d + group.length) % group.length]
+      select(next)
+      buttons[group.indexOf(next)]?.focus()
+    }
+
+    let timer: number
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(active.textContent ?? "")
+      } catch {
+        return
+      }
+      copy.innerHTML = `${CHECK}<span>Copied</span>`
+      copy.setAttribute("aria-label", "Copied")
+      clearTimeout(timer)
+      timer = window.setTimeout(() => {
+        copy.innerHTML = `${COPY}<span>Copy</span>`
+        copy.setAttribute("aria-label", "Copy code")
+      }, 1800)
+    }
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLPreElement>("article pre[data-lang]:not([data-enhanced])").forEach((pre) => {
+      if (pre.dataset.enhanced) return
+      const group = [pre]
+      const name = pre.dataset.group
+      // Consecutive sibling blocks sharing a group become one tabbed block.
+      for (let n = pre.nextElementSibling; name && n instanceof HTMLPreElement && n.dataset.group === name; n = n.nextElementSibling) group.push(n)
+      enhance(group)
+    })
+  })
+</script>
+
+<style is:global>
+  .code-block { margin: 1.5rem 0; border-radius: 0.75rem; overflow: hidden; border: 1px solid rgb(0 0 0 / 0.1); }
+  html.dark .code-block { border-color: rgb(255 255 255 / 0.15); }
+  .code-bar { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0 0.5rem 0 0.25rem; min-height: 2.5rem; font-size: 0.8rem; background: rgb(14 165 233 / 0.08); border-bottom: 1px solid rgb(0 0 0 / 0.08); color: #334155; }
+  html.dark .code-bar { background: rgb(99 102 241 / 0.12); border-bottom-color: rgb(255 255 255 / 0.1); color: #cbd5e1; }
+  .code-tabs { display: flex; overflow-x: auto; min-width: 0; }
+  .code-lang { padding: 0 0.75rem; font-weight: 600; letter-spacing: 0.02em; }
+  .code-tab { padding: 0.6rem 0.75rem; white-space: nowrap; opacity: 0.65; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .code-tab:hover { opacity: 1; }
+  .code-tab[aria-selected="true"] { opacity: 1; font-weight: 600; border-bottom-color: #0ea5e9; color: #0369a1; }
+  html.dark .code-tab[aria-selected="true"] { border-bottom-color: #818cf8; color: #c7d2fe; }
+  .code-copy { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; opacity: 0.75; }
+  .code-copy:hover { opacity: 1; background: rgb(0 0 0 / 0.06); }
+  html.dark .code-copy:hover { background: rgb(255 255 255 / 0.1); }
+  .code-tab:focus-visible, .code-copy:focus-visible { outline: 2px solid #0ea5e9; outline-offset: -2px; }
+  article .code-block pre { margin: 0; border: 0; border-radius: 0; padding: 1rem 1.25rem; max-height: 32rem; overflow: auto; }
+  article .code-block pre[hidden] { display: none; }
+</style>

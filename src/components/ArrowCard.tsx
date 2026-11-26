@@ -1,14 +1,14 @@
-import { formatDate } from "@lib/utils"
+import { formatDate, readingTime } from "@lib/utils"
 import type { CollectionEntry } from "astro:content"
 
 type Props = {
-  entry: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"store">
+  entry: CollectionEntry<"blog"> | CollectionEntry<"projects">
   pill?: boolean
 }
 
 export default function ArrowCard({entry, pill}: Props) {
     return (
-      <a href={`/${entry.collection}/${entry.slug}`} class="group p-4 gap-3 flex items-center border rounded-lg hover:bg-blue-300 hover:dark:bg-indigo-950 border-black/15 dark:border-white/20 transition-colors duration-300 ease-in-out">
+      <a href={`/${entry.collection}/${entry.slug}`} class="group card card-hover p-4 gap-3 flex items-center">
       <div class="w-full group-hover:text-black group-hover:dark:text-white blend">
         <div class="flex flex-wrap items-center gap-2">
           {pill &&
@@ -18,6 +18,7 @@ export default function ArrowCard({entry, pill}: Props) {
           }
           <div class="text-sm uppercase">
             {formatDate(entry.data.date)}
+            {entry.collection === "blog" && ` · ${readingTime(entry.body)}`}
           </div>
         </div>
         <div class="font-semibold mt-3 text-black dark:text-white">
@@ -28,8 +29,8 @@ export default function ArrowCard({entry, pill}: Props) {
           {entry.data.summary}
         </div>
         <ul class="flex flex-wrap mt-2 gap-1">
-          {entry.data.tags.map((tag:string) => ( // this line has an error; Parameter 'tag' implicitly has an 'any' type.ts(7006)
-            <li class="text-xs uppercase py-0.5 px-1 rounded bg-black/5 dark:bg-white/20 text-black/75 dark:text-white/75">
+          {entry.data.tags.map((tag: string) => (
+            <li class="chip">
               {tag}
             </li>
           ))}

@@ -6,6 +6,10 @@ import Footer from "@components/Footer.astro"
 import Drawer from "@components/Drawer.astro"
 const { title, description } = Astro.props
 import { SITE } from "@consts"
+
+// Page content lifts out and settles in; the header stays put.
+const anim = { old: { name: "page-out", duration: "0.25s", easing: "ease-in", fillMode: "both" }, new: { name: "page-in", duration: "0.45s", easing: "cubic-bezier(0.22, 1, 0.36, 1)", fillMode: "both" } }
+const pageTransition = { forwards: anim, backwards: anim }
 ---
 
 <!doctype html>
@@ -16,7 +20,7 @@ import { SITE } from "@consts"
   <body>
     <Header />
     <Drawer />
-    <main class="bg-gradient-to-b from-blue-300 dark:from-indigo-950 to-white dark:to-black">
+    <main transition:animate={pageTransition} class="bg-gradient-to-b from-sky-300 via-sky-100 via-40% to-indigo-50 dark:from-indigo-950 dark:via-black dark:to-black">
       <slot />
     </main>
     <Footer />

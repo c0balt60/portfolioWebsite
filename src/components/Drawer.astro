@@ -3,13 +3,18 @@ import { SITE, LINKS } from "@consts"
 import { cn } from "@lib/utils"
 const { pathname } = Astro.url
 const subpath = pathname.match(/[^/]+/g)
+const iconBtn = "size-9 rounded-full p-2 items-center justify-center border border-transparent stroke-current text-current transition-all duration-300 ease-in-out hover:text-sky-700 dark:hover:text-sky-200 hover:stroke-sky-700 dark:hover:stroke-sky-200 hover:shadow-md hover:shadow-indigo-500/25 hover:[background:linear-gradient(#f0f9ff,#f0f9ff)_padding-box,linear-gradient(135deg,#38bdf8,#6366f1)_border-box] dark:hover:[background:linear-gradient(#0f172a,#0f172a)_padding-box,linear-gradient(135deg,#7dd3fc,#818cf8)_border-box] border-black/10 dark:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+const activeBtn = "pointer-events-none !border-transparent !text-white !stroke-white [background:linear-gradient(135deg,#0284c7,#4f46e5)!important] shadow-lg shadow-indigo-500/30"
+const linkBase = "flex items-center justify-center rounded-full text-current transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+const linkActive = "bg-gradient-to-r from-sky-600 to-indigo-600 text-white shadow-lg shadow-indigo-500/30"
+const linkIdle = "hover:bg-gradient-to-r hover:from-sky-500/15 hover:to-indigo-500/15 hover:text-sky-900 dark:hover:text-sky-100"
 ---
 
-<div id="drawer" class="fixed inset-0 h-0 z-40 overflow-hidden flex flex-col items-center justify-center md:hidden bg-neutral-100 dark:bg-neutral-900 transition-[height] duration-300 ease-in-out">
-  <nav class="flex flex-col items-center space-y-2">
+<div id="drawer" class="fixed inset-0 h-0 z-40 overflow-hidden flex flex-col items-center justify-center md:hidden bg-gradient-to-b from-sky-50/95 to-indigo-100/95 dark:from-slate-950/95 dark:to-indigo-950/95 backdrop-blur-xl transition-[height] duration-300 ease-in-out">
+  <nav class="flex flex-col items-center space-y-3">
     {
       LINKS.map((LINK) => (
-        <a href={LINK.HREF} class={cn("flex items-center justify-center px-3 py-1 rounded-full", "text-current hover:text-black dark:hover:text-white", "hover:bg-black/5 dark:hover:bg-white/20", "transition-colors duration-300 ease-in-out", pathname === LINK.HREF || "/" + subpath?.[0] === LINK.HREF ? "pointer-events-none bg-black dark:bg-white text-white dark:text-black" : "")}>
+        <a href={LINK.HREF} class={cn(linkBase, "px-5 py-2 text-xl", pathname === LINK.HREF || "/" + subpath?.[0] === LINK.HREF ? linkActive + " pointer-events-none" : linkIdle)}>
           {LINK.TEXT}
         </a>
       ))
@@ -17,19 +22,19 @@ const subpath = pathname.match(/[^/]+/g)
   </nav>
 
   <div class="flex gap-1 mt-5">
-    <a href="/search" aria-label={`Search blog posts and projects on ${SITE.TITLE}`} class={cn("size-9 rounded-full p-2 items-center justify-center bg-transparent hover:bg-black/5 dark:hover:bg-white/20 stroke-current hover:stroke-black hover:dark:stroke-white border border-black/10 dark:border-white/25 transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "search" ? "pointer-events-none bg-black dark:bg-white text-white dark:text-black" : "")}>
+    <a href="/search" aria-label={`Search blog posts and projects on ${SITE.TITLE}`} class={cn(iconBtn, pathname === "/search" || "/" + subpath?.[0] === "search" ? activeBtn : "")}>
       <svg class="size-full">
         <use href="/ui.svg#search"></use>
       </svg>
     </a>
 
-    <a href="/rss.xml" target="_blank" aria-label={`Rss feed for ${SITE.TITLE}`} class="size-9 rounded-full p-2 items-center justify-center bg-transparent hover:bg-black/5 dark:hover:bg-white/20 stroke-current hover:stroke-black hover:dark:stroke-white border border-black/10 dark:border-white/25 transition-colors duration-300 ease-in-out">
+    <a href="/rss.xml" target="_blank" aria-label={`Rss feed for ${SITE.TITLE}`} class={iconBtn}>
       <svg class="size-full">
         <use href="/ui.svg#rss"></use>
       </svg>
     </a>
 
-    <button id="drawer-theme-button" aria-label={`Toggle light and dark theme`} class="size-9 rounded-full p-2 items-center justify-center bg-transparent hover:bg-black/5 dark:hover:bg-white/20 stroke-current hover:stroke-black hover:dark:stroke-white border border-black/10 dark:border-white/25 transition-colors duration-300 ease-in-out">
+    <button id="drawer-theme-button" aria-label={`Toggle light and dark theme`} class={iconBtn}>
       <svg class="block dark:hidden size-full">
         <use href="/ui.svg#sun"></use>
       </svg>

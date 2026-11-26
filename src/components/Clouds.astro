@@ -1,0 +1,21 @@
+---
+// Day-sky clouds that drift across the hero (light mode only).
+const clouds = [
+  { top: 8, width: 380, duration: 70, delay: 5 },
+  { top: 22, width: 260, duration: 55, delay: 30 },
+  { top: 35, width: 460, duration: 90, delay: 60 },
+  { top: 15, width: 220, duration: 45, delay: 20 },
+  { top: 42, width: 300, duration: 65, delay: 45 },
+]
+---
+
+<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden dark:hidden">
+  {clouds.map((cloud) => (
+    <div
+      class="absolute left-0 animate-drift"
+      style={`top:${cloud.top}%;animation-duration:${cloud.duration}s;animation-delay:-${cloud.delay}s`}
+    >
+      <div class="rounded-full bg-white/80 blur-2xl" style={`width:${cloud.width}px;height:${cloud.width * 0.35}px`} />
+    </div>
+  ))}
+</div>

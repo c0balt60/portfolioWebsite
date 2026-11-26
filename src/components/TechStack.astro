@@ -1,0 +1,29 @@
+---
+import { SKILLS } from "@consts"
+import TechIcon from "@components/TechIcon.astro"
+
+type Props = {
+  names: string[]
+}
+
+const { names } = Astro.props
+
+// Known skills get their icon and brand color; anything else is a plain chip.
+const skillByName = new Map(
+  SKILLS.flatMap((group) => group.ITEMS).map((skill) => [skill.name.toLowerCase(), skill]),
+)
+---
+
+<div class="card p-3 sm:w-1/2">
+  <ul aria-label="Built with" class="flex flex-wrap gap-2">
+    {names.map((name) => {
+      const skill = skillByName.get(name.toLowerCase())
+      return (
+        <li class="group chip !text-sm !py-1 !px-3 flex items-center gap-1.5 hover:text-black dark:hover:text-white blend">
+          {skill && <TechIcon skill={skill} class="size-5" />}
+          {skill?.name ?? name}
+        </li>
+      )
+    })}
+  </ul>
+</div>

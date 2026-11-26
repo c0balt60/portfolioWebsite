@@ -4,6 +4,7 @@ import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import Blog from "@components/Blog"
+import Skeleton from "@components/Skeleton.astro"
 import { BLOG } from "@consts"
 
 const posts = (await getCollection("blog"))
@@ -16,13 +17,16 @@ const tags = [...new Set(posts.flatMap(post => post.data.tags))]
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
   <TopLayout>
-    <div class="animate page-heading">
-      {BLOG.TITLE}
+    <div class="animate">
+      <h1 class="page-heading">{BLOG.TITLE}</h1>
+      <p class="mt-2">{BLOG.DESCRIPTION}</p>
     </div>
   </TopLayout>
   <BottomLayout>
     <div class="animate">
-      <Blog client:load tags={tags} data={posts} />
+      <Blog client:only="solid-js" tags={tags} data={posts}>
+        <Skeleton slot="fallback" variant="blog" />
+      </Blog>
     </div>
   </BottomLayout>
 </PageLayout>

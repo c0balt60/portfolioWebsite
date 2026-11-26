@@ -1,0 +1,53 @@
+---
+// Placeholder layouts shown while the Solid islands load. Mirrors Projects.tsx / Blog.tsx sizes.
+type Props = { variant: "projects" | "blog" }
+const { variant } = Astro.props
+const bar = "rounded bg-sky-200/60 dark:bg-white/10"
+const pills = [64, 80, 72, 96, 68]
+---
+
+<div class="space-y-6 animate-pulse" aria-hidden="true">
+  <div class="flex flex-wrap gap-2">
+    {pills.map((w) => <div class:list={["h-[30px] rounded-full", bar]} style={`width:${w}px`} />)}
+  </div>
+  <div class:list={["h-5 w-40", bar]} />
+  {variant === "projects" ? (
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {[0, 1, 2, 3].map(() => (
+        <li class="card overflow-hidden h-full">
+          <div class:list={["aspect-video rounded-none", bar]} />
+          <div class="p-4 space-y-2">
+            <div class:list={["h-4 w-20", bar]} />
+            <div class:list={["h-6 w-2/3", bar]} />
+            <div class:list={["h-5 w-full", bar]} />
+            <div class:list={["h-5 w-4/5", bar]} />
+            <div class="flex gap-1 pt-3">
+              <div class:list={["h-6 w-14 rounded-full", bar]} />
+              <div class:list={["h-6 w-16 rounded-full", bar]} />
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <>
+      <div class="card p-6 md:p-8 space-y-3">
+        <div class:list={["h-6 w-48", bar]} />
+        <div class:list={["h-8 w-3/4", bar]} />
+        <div class:list={["h-6 w-full", bar]} />
+        <div class:list={["h-5 w-24 mt-4", bar]} />
+      </div>
+      <ul class="flex flex-col gap-3">
+        {[0, 1, 2, 3].map(() => (
+          <li class="card p-4 space-y-2">
+            <div class:list={["h-5 w-32", bar]} />
+            <div class:list={["h-6 w-1/2 mt-3", bar]} />
+            <div class:list={["h-5 w-full", bar]} />
+            <div class:list={["h-5 w-4/5", bar]} />
+            <div class:list={["h-6 w-24 rounded-full", bar]} />
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</div>

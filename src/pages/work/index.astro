@@ -3,7 +3,8 @@ import { getCollection } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
 import TopLayout from "@layouts/TopLayout.astro";
 import BottomLayout from "@layouts/BottomLayout.astro";
-import { WORK } from "@consts";
+import TechIcon from "@components/TechIcon.astro";
+import { WORK, SKILLS } from "@consts";
 
 const collection = await getCollection("work");
 
@@ -19,43 +20,119 @@ const work = await Promise.all(
   }),
 );
 
+// Known skills get their icon on the stack chips.
+const skillByName = new Map(
+  SKILLS.flatMap((group) => group.ITEMS).map((skill) => [skill.name.toLowerCase(), skill]),
+);
+
 function formatWorkDate(input: Date | string) {
   if (typeof input === "string") return input;
+  return input.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
 
-  const month = input.toLocaleDateString("en-US", {
-    month: "short",
-  });
-
-  const year = new Date(input).getFullYear();
-  return `${month} ${year}`;
+// "Now" (or any non-date end) means the job is ongoing.
+function duration(start: Date, end: Date | string) {
+  const to = typeof end === "string" ? new Date() : end;
+  const days = Math.round((to.getTime() - start.getTime()) / 86_400_000);
+  if (days < 31) return `${days} day${days === 1 ? "" : "s"}`;
+  const months = Math.max(1, (to.getFullYear() - start.getFullYear()) * 12 + to.getMonth() - start.getMonth());
+  const years = Math.floor(months / 12);
+  const rest = months % 12;
+  return [years && `${years} yr`, rest && `${rest} mo`].filter(Boolean).join(" ");
 }
 ---
 
 <PageLayout title={WORK.TITLE} description={WORK.DESCRIPTION}>
   <TopLayout>
-    <div class="animate page-heading">
-      {WORK.TITLE}
+    <div class="animate">
+      <h1 class="page-heading">{WORK.TITLE}</h1>
+      <p class="mt-2">{WORK.DESCRIPTION}</p>
     </div>
   </TopLayout>
   <BottomLayout>
-    <ul>
-      {
-        work.map((entry) => (
-          <li class="animate border-b border-black/10 dark:border-white/25 mt-4 py-8 first-of-type:mt-0 first-of-type:pt-0 last-of-type:border-none">
-            <div class="text-sm uppercase mb-4">
-              {formatWorkDate(entry.data.dateStart)} -{" "}
-              {formatWorkDate(entry.data.dateEnd)}
+    <ol id="timeline" class="relative pb-12">
+      <!-- Constellation line: faint base, plus a glowing line that fills as you scroll -->
+      <div aria-hidden="true" class="absolute left-4 md:left-1/2 top-0 bottom-12 w-px -translate-x-1/2 bg-[linear-gradient(to_bottom,currentColor_50%,transparent_50%)] bg-[length:1px_8px] opacity-25"></div>
+      <div
+        id="timeline-progress"
+        aria-hidden="true"
+        class="absolute left-4 md:left-1/2 top-0 bottom-12 w-0.5 origin-top rounded-full bg-gradient-to-b from-sky-400 to-indigo-500 shadow-[0_0_12px_rgba(56,189,248,0.8)]"
+        style="transform: translateX(-50%) scaleY(var(--progress, 0))"
+      ></div>
+
+      {work.map((entry, i) => {
+        const current = typeof entry.data.dateEnd === "string";
+        const chips = [...(entry.data.stack ?? []), ...(entry.data.packages ?? [])];
+        return (
+          <li class="relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-16 pb-12 last:pb-0">
+            <span class:list={["node absolute left-4 md:left-1/2 top-6 -translate-x-1/2 size-4 rounded-full border-2", current && "current"]}>
+              {current && <span class="absolute inset-0 rounded-full bg-sky-400 animate-ping" />}
+            </span>
+            <div class:list={["animate", i % 2 ? "from-right md:col-start-2" : "from-left md:col-start-1"]}>
+              <div class="card card-hover p-5">
+                <div class="flex flex-wrap items-center gap-2 text-xs uppercase">
+                  <span>{formatWorkDate(entry.data.dateStart)} – {formatWorkDate(entry.data.dateEnd)}</span>
+                  <span class="chip normal-case">{duration(entry.data.dateStart, entry.data.dateEnd)}</span>
+                  {current && <span class="chip normal-case border-sky-400/50 text-sky-700 dark:text-sky-300">Current</span>}
+                </div>
+                <h2 class="mt-3 text-lg font-semibold text-black dark:text-white">{entry.data.company}</h2>
+                <div class="text-sm font-semibold text-sky-700 dark:text-sky-300">{entry.data.role}</div>
+                <article class="prose-sm mt-3 pb-0">
+                  <entry.Content />
+                </article>
+                {chips.length > 0 && (
+                  <ul class="flex flex-wrap gap-1.5 mt-4">
+                    {chips.map((name) => {
+                      const skill = skillByName.get(name.toLowerCase());
+                      return (
+                        <li class="group chip flex items-center gap-1.5 hover:text-black dark:hover:text-white blend">
+                          {skill && <TechIcon skill={skill} class="size-3.5" />}
+                          {name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
             </div>
-            <div class="text-black dark:text-white font-semibold">
-              {entry.data.company}
-            </div>
-            <div class="text-sm font-semibold">{entry.data.role}</div>
-            <article class="prose dark:prose-invert">
-              <entry.Content />
-            </article>
           </li>
-        ))
-      }
-    </ul>
+        );
+      })}
+    </ol>
   </BottomLayout>
 </PageLayout>
+
+<style>
+  .node {
+    @apply bg-sky-50 dark:bg-black border-sky-900/20 dark:border-white/30 transition-all duration-500;
+  }
+
+  .node.lit {
+    @apply bg-sky-400 border-sky-100 dark:border-indigo-200 scale-125;
+    box-shadow: 0 0 16px 4px rgba(56, 189, 248, 0.6);
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const timeline = document.getElementById("timeline")
+    const progress = document.getElementById("timeline-progress")
+    if (!timeline || !progress) return
+    const nodes = [...timeline.querySelectorAll<HTMLElement>(".node")]
+    const cleanup = new AbortController()
+    document.addEventListener("astro:before-swap", () => cleanup.abort(), { once: true })
+
+    // Fill the line up to 60% of the viewport, and light up the stars it has passed.
+    function update() {
+      const anchor = window.innerHeight * 0.6
+      const rect = progress!.getBoundingClientRect()
+      const fill = Math.min(Math.max((anchor - rect.top) / progress!.offsetHeight, 0), 1)
+      progress!.style.setProperty("--progress", String(fill))
+      nodes.forEach((node) => node.classList.toggle("lit", node.getBoundingClientRect().top < anchor))
+    }
+
+    window.addEventListener("scroll", update, { passive: true, signal: cleanup.signal })
+    window.addEventListener("resize", update, { signal: cleanup.signal })
+    update()
+  })
+</script>
